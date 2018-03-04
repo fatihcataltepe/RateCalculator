@@ -1,5 +1,6 @@
 package project;
 
+import project.bank.Bank;
 import project.exception.InvalidArgumentException;
 import project.exception.InvalidLoanValueException;
 import project.exception.MissingFileException;
@@ -15,13 +16,20 @@ public class Main {
         String arg1 = args[0];
         File file = new File(arg1);
         if (!file.exists()) throw new MissingFileException(arg1);
-        System.out.println("File is created");
 
         //throws exception if the second parameter is not an integer
         String arg2 = args[1];
         int loanValue = Integer.parseInt(arg2);
         if(!checkLoanValue(loanValue)) throw new InvalidLoanValueException(loanValue);
-        System.out.println("Loan value is created");
+
+        //create bank from file
+        Bank bank = new Bank(file);
+
+        if(!bank.canProvideLoan(loanValue)){
+            System.out.println("It is not possible to provide a quote at this time due to insufficient offers");
+        }
+
+
 
 
     }
