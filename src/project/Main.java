@@ -11,14 +11,13 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        //check arguments
+        //check arguments, throw exception if anything is unexpected
         if (args.length != 2) throw new InvalidArgumentException();
 
         String arg1 = args[0];
         File file = new File(arg1);
         if (!file.exists()) throw new MissingFileException(arg1);
 
-        //throws exception if the second parameter is not an integer
         String arg2 = args[1];
         int loanAmount = Integer.parseInt(arg2);
         if (!checkLoanAmount(loanAmount)) throw new InvalidLoanAmountException(loanAmount);
@@ -32,8 +31,6 @@ public class Main {
         } else {
             System.out.println("It is not possible to provide a quote at this time due to insufficient offers");
         }
-
-
     }
 
     /**

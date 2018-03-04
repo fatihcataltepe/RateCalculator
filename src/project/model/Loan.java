@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 public class Loan {
     private static int MONTHS = 60;
+
     double toReceive;
     double toPay;
 
