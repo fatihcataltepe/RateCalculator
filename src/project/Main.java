@@ -2,8 +2,9 @@ package project;
 
 import project.bank.Bank;
 import project.exception.InvalidArgumentException;
-import project.exception.InvalidLoanValueException;
+import project.exception.InvalidLoanAmountException;
 import project.exception.MissingFileException;
+import project.model.Loan;
 
 import java.io.File;
 
@@ -19,17 +20,18 @@ public class Main {
 
         //throws exception if the second parameter is not an integer
         String arg2 = args[1];
-        int loanValue = Integer.parseInt(arg2);
-        if(!checkLoanValue(loanValue)) throw new InvalidLoanValueException(loanValue);
+        int loanAmount = Integer.parseInt(arg2);
+        if (!checkLoanAmount(loanAmount)) throw new InvalidLoanAmountException(loanAmount);
 
         //create bank from file
         Bank bank = new Bank(file);
 
-        if(!bank.canProvideLoan(loanValue)){
+        if (bank.canProvideLoan(loanAmount)) {
+            Loan loan = bank.getLoan(loanAmount);
+            System.out.println(loan.getSummary());
+        } else {
             System.out.println("It is not possible to provide a quote at this time due to insufficient offers");
         }
-
-
 
 
     }
@@ -38,12 +40,12 @@ public class Main {
      * Checks if the given loan is between 1000-15000 (inclusive)
      * And increments of 100
      *
-     * @param loan value
+     * @param loanAmount
      * @return if the loan is valid
      */
-    private static boolean checkLoanValue(int loan){
-        if(loan < 1000 || loan > 15000) return false;
-        if(loan % 100 != 0) return false;
+    private static boolean checkLoanAmount(int loanAmount) {
+        if (loanAmount < 1000 || loanAmount > 15000) return false;
+        if (loanAmount % 100 != 0) return false;
         return true;
     }
 }

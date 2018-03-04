@@ -1,6 +1,7 @@
 package project.bank;
 
 import project.model.Lender;
+import project.model.Loan;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,5 +30,25 @@ public class Bank {
 
     public boolean canProvideLoan(int loanValue) {
         return totalLoan >= loanValue;
+    }
+
+    /**
+     * creates a loan object and updates its info
+     * according to lenders and loan amount
+     *
+     * @param loanValue
+     * @return Loan object contains the amount to recieve and amount to pay
+     */
+    public Loan getLoan(int loanValue){
+        Loan loan = new Loan();
+
+        while(loanValue>0 && !lenders.isEmpty()){
+            Lender curr = lenders.remove();
+            double amountFromCurr = Math.min(loanValue, curr.getAmount());
+            loan.add(amountFromCurr, curr.getRate());
+            loanValue -= amountFromCurr;
+        }
+
+        return loan;
     }
 }
